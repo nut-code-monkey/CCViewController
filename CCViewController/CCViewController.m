@@ -119,6 +119,33 @@
 }
 
 
+#pragma mark - Setting up the director
+
+- (CCGLView *)createDirectorGLView
+{
+    // Create a default OpenGL view.
+    CCGLView *glView = [CCGLView viewWithFrame:[[[UIApplication sharedApplication] keyWindow] bounds]
+                                   pixelFormat:kEAGLColorFormatRGB565
+                                   depthFormat:0
+                            preserveBackbuffer:NO
+                                    sharegroup:nil
+                                 multiSampling:NO
+                               numberOfSamples:0];
+    
+    return glView;
+}
+
+
+- (void)didInitializeDirector
+{
+    CCDirector *director = [CCDirector sharedDirector];
+
+    // Set up some common director properties.
+    [director setAnimationInterval:1.0f/60.0f];
+    [director enableRetinaDisplay:YES];
+}
+
+
 #pragma mark - Notification handlers
 
 - (void)applicationWillResignActive:(NSNotification *)notification
@@ -154,33 +181,6 @@
 - (void)applicationSignificantTimeChange:(NSNotification *)notification
 {
     [[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-}
-
-
-#pragma mark - Setting up the director
-
-- (CCGLView *)createDirectorGLView
-{
-    // Create a default OpenGL view.
-    CCGLView *glView = [CCGLView viewWithFrame:[[[UIApplication sharedApplication] keyWindow] bounds]
-                                   pixelFormat:kEAGLColorFormatRGB565
-                                   depthFormat:0
-                            preserveBackbuffer:NO
-                                    sharegroup:nil
-                                 multiSampling:NO
-                               numberOfSamples:0];
-    
-    return glView;
-}
-
-
-- (void)didInitializeDirector
-{
-    CCDirector *director = [CCDirector sharedDirector];
-
-    // Set up some common director properties.
-    [director setAnimationInterval:1.0f/60.0f];
-    [director enableRetinaDisplay:YES];
 }
 
 
