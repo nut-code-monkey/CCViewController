@@ -1,6 +1,6 @@
 //
 //  CCViewController.m
-//  Random Battles
+//  CCViewController
 //
 //  Created by Jerrod Putman on 2/7/12.
 //  Copyright (c) 2012 Tiny Tim Games. All rights reserved.
