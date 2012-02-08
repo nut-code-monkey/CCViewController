@@ -58,11 +58,102 @@
 }
 
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // Observe some notifications so we can properly instruct the director.
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationWillResignActive:)
+                                                 name:UIApplicationWillResignActiveNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidBecomeActive:)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidEnterBackground:)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationWillEnterForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification 
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationWillTerminate:)
+                                                 name:UIApplicationWillTerminateNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationSignificantTimeChange:)
+                                                 name:UIApplicationSignificantTimeChangeNotification
+                                               object:nil];
+}
+
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
 
     [[CCDirector sharedDirector] setDelegate:nil];
+}
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    
+    [[CCDirector sharedDirector] purgeCachedData];
+}
+
+
+#pragma mark - Notification handlers
+
+- (void)applicationWillResignActive:(NSNotification *)notification
+{
+    [[CCDirector sharedDirector] pause];
+}
+
+
+- (void)applicationDidBecomeActive:(NSNotification *)notification
+{
+    [[CCDirector sharedDirector] resume];
+}
+
+
+- (void)applicationDidEnterBackground:(NSNotification *)notification
+{
+    [[CCDirector sharedDirector] stopAnimation];
+}
+
+
+- (void)applicationWillEnterForeground:(NSNotification *)notification
+{
+    [[CCDirector sharedDirector] startAnimation];
+}
+
+
+- (void)applicationWillTerminate:(NSNotification *)notification
+{
+    [[CCDirector sharedDirector] end];
+}
+
+
+- (void)applicationSignificantTimeChange:(NSNotification *)notification
+{
+    [[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
 
