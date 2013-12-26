@@ -129,7 +129,7 @@
 - (CCGLView *)createDirectorGLView
 {
     // Create a default OpenGL view.
-    CCGLView *glView = [CCGLView viewWithFrame:[[[UIApplication sharedApplication] keyWindow] bounds]
+    CCGLView *glView = [CCGLView viewWithFrame:[[[[UIApplication sharedApplication] delegate] window] bounds]
                                    pixelFormat:kEAGLColorFormatRGB565
                                    depthFormat:0
                             preserveBackbuffer:NO
